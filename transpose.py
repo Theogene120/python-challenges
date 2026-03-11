@@ -6,13 +6,13 @@ def transpose(matrix):
     i = 0
     j = 0
 
-    for i in range(n):
+    for i in range(subN):
         temp = []
-        for j in range(subN):
-            temp.append(matrix[i,j])
+        for j in range(n):
+            temp.append(matrix[j][i])
         res.append(temp)
     
-    return temp
+    return res
 
 print(transpose([[1,2,3],[4,5,6],[7,8,9]]))
 
