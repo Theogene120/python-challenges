@@ -1,61 +1,46 @@
-# def palindromeIndex(s):
-#     if s == s[::-1]:
-#         return -1
-    
-#     left = 0
-#     right = len(s) - 1
-    
-#     while left < right:
-#         if s[left] == s[right]:
-#             left += 1
-#             right -= 1
-#         else:
-#             # remove right
-#             if s[left+1:right+1] == s[left+1:right+1][::-1]:
-#                 return left
-#             # r4move left
-#             else:
-#                 return right
-    
-#     return -1
+# import math
+# def test(d, arr):
+#     count = 0
+#     size = len(arr)
 
-# print(palindromeIndex('bcbc'))  # 0 or 3
-# print(palindromeIndex('aaab'))  # 3
+#     for left in range(size):
+#         for right in range(size):
+#             if arr[right] - arr[left] == d and left < right:
+#                 left = right
+#                 count += 1
+#     return math.ceil(count / 3)
 
-def pairs(k, arr):
-    arr.sort()
-    count = 0
-    left, right = 0, 1
-    
-    while right < len(arr):
-        diff = arr[right] - arr[left]
-        if diff == k:
-            count += 1
-            left += 1
-            right += 1
-        elif diff < k:
-            right += 1
+# print(test(1, [2,2,3,4,5]))
+# print(test(3, [1,2,4,5,7,8,10]))
+# print(test(3, [1, 6, 7, 7, 8, 10, 12, 13, 14, 19]))
+
+
+
+def sum_digits(a: str, b: str) -> str:
+    result = []
+    max_len = max(len(a), len(b))
+
+    for i in range(max_len):
+        digit_a = int(a[i])          if i < len(a) else None
+        digit_b = int(b[-(i + 1)])   if i < len(b) else None
+
+        if digit_a is not None and digit_b is not None:
+            result.append(str(digit_a + digit_b))
+        elif digit_a is not None:
+            result.append(str(digit_a))
         else:
-            left += 1
-        if left == right:
-            right += 1
-    
-    return count
+            result.append(str(digit_b))
 
-print(pairs(1, [1,2,3,4]))
-print(pairs(2, [1,5,3,4,2])) # 3
+    return "".join(result)
 
 
-def beautifulTriplets(d, arr):
-    arr.sort()
-    count = 0
-    
-    for i in range(len(arr) - 2):
-        if arr[i+1] - arr[i] == d and arr[i+2] - arr[i+1] == d:
-            count += 1
-    
-    return count
-
-print(beautifulTriplets(1, [2,2,3,4,5]))  # 4
-
-print(beautifulTriplets(1, [2,2,3,4,5]))
+# Tests
+print(sum_digits("99",   "99"))    # "1818"
+print(sum_digits("123",  "45"))    # "1" + (2+5) + (3+4) → "179"  (1 alone, 7, 9) → Wait: b reversed = "54"
+                                   # i=0: a[0]=1, b[-1]=5 → 6
+                                   # i=1: a[1]=2, b[-2]=4 → 6
+                                   # i=2: a[2]=3, no b    → 3  → "663"
+print(sum_digits("5",    "123"))   # i=0: a[0]=5, b[-1]=3 → 8
+                                   # i=1: no a,   b[-2]=2 → 2
+                                   # i=2: no a,   b[-3]=1 → 1  → "821"
+print(sum_digits("9",    "9"))     # "18"
